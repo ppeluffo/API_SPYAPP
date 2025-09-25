@@ -1,3 +1,22 @@
+PENDIENTES:
+1- Usar JWT en los pedidos de datos
+2- Implementar el servicio de logger
+3- Implementar el servicio de mailer (google)
+4- Pasar todo a un docker
+5- Crear un process que lea los datos y arme una tabla LOCAL
+7- TREES:
+    - Generacion
+    - Almacenado ( Pgsql, Redis ?)
+    - Acceso
+    - Envio JSON a api.
+8- Testings faltantes APP
+   - Datos historicos
+   - Datos online
+   - Autorizacion
+   
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 DRIVER DE POSTGRES
 ------------------
 Al usar sqlalchemy vamos a tener problemas si no instalamos el driver de postgres.
@@ -41,9 +60,17 @@ PROBLEMAS:
 4. En el update() no puedo hacerlo directamente sino que debo leer el usuario y modificarlo como objeto
    y luego hacer el commit.
 
-
 5. Al generar un JWT donde un campo es tipo datetime da un error: TypeError: Object of type datetime is not JSON serializable
    Debemos convertirlo a string con isoformat()
 
 6. Las fechas en la BD son datetime sin timezone, pero al generarlas en los tokens son con timezone.
    Modifico la BD y siempre uso fechas timezone 'aware'
+
+CONSULTAS CON SQLALCHEMY Y PANDAS:
+----------------------------------
+Las consultas SQL que se hacen desde pandas, utilizan sqlalchemy y si hay incompatibilidad
+de versiones se genera un error.
+En particular en las consultas que usamos un wildcard %, debemos ponerlo repetido !!!
+Sino vamos a tener el error: TypeError: sqlalchemy.cyextension.immutabledict.immutabledict is not a sequence
+
+Las sesiones NO tienen un update()
