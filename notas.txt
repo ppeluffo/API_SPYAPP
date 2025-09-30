@@ -1,0 +1,77 @@
+PENDIENTES:
+
+2- Implementar el servicio de logger
+
+4- Pasar todo a un docker
+
+5- Crear un process que lea los datos y arme una tabla LOCAL
+7- TREES:
+    - Generacion
+    - Almacenado ( Pgsql, Redis ?)
+    - Acceso
+    - Envio JSON a api.
+8- Testings faltantes APP
+   - Datos historicos
+   - Datos online
+   - Autorizacion
+   
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+DRIVER DE POSTGRES
+------------------
+Al usar sqlalchemy vamos a tener problemas si no instalamos el driver de postgres.
+Esto se hace con:
+pip install psycopg2-binary
+Si no usamos el -binary nos va a dar problemas
+
+
+CREACION DE LA BD
+-----------------
+Aunque no lo use, en el archivo create_db.py debo poner una linea
+from . import models
+para que se creen las tablas definidas en el archivo
+Desde python corremos:
+> python3 -m api_spyapp.bdatos.LOCAL.create_db
+
+
+GUARDADO DE CONTRASEÑAS EN LA BD
+--------------------------------
+Los hashes de contraseñas generados por werkzeug.security suelen tener entre
+100 y 120 caracteres por lo que conviene usar String(512) en el campo del modelo de Usuario.
+
+
+TESTING:
+--------
+Lo corremos como modulo
+> python3 -m api_spyapp.tests.test_{repository|bdatos|servicios}
+
+
+PROBLEMAS:
+----------
+1. Correr como modulo para crear la bd.
+   Genero un paquete api_spyapp.
+
+2. Error por contraseñas hashed muy largas.
+   Incremento el tamaño del campo en la BD
+
+3. Errror al invocar al logger en la bdatos.api_spyapp
+   Lo instanciaba con loghandler = logger.Logger() y debe hacerse como loghandler = logger.Logger.log
+
+4. En el update() no puedo hacerlo directamente sino que debo leer el usuario y modificarlo como objeto
+   y luego hacer el commit.
+
+5. Al generar un JWT donde un campo es tipo datetime da un error: TypeError: Object of type datetime is not JSON serializable
+   Debemos convertirlo a string con isoformat()
+
+6. Las fechas en la BD son datetime sin timezone, pero al generarlas en los tokens son con timezone.
+   Modifico la BD y siempre uso fechas timezone 'aware'
+
+CONSULTAS CON SQLALCHEMY Y PANDAS:
+----------------------------------
+Las consultas SQL que se hacen desde pandas, utilizan sqlalchemy y si hay incompatibilidad
+de versiones se genera un error.
+En particular en las consultas que usamos un wildcard %, debemos ponerlo repetido !!!
+Sino vamos a tener el error: TypeError: sqlalchemy.cyextension.immutabledict.immutabledict is not a sequence
+
+Las sesiones NO tienen un update()

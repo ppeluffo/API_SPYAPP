@@ -1,0 +1,33 @@
+#!/home/pablo/Spymovil/python/proyectos/API_SPYAPP/.venv/bin/python3
+
+import os
+
+PGSQL_HOST_GDA = os.getenv( "PGSQL_HOST_GDA", "192.168.0.6")
+PGSQL_PORT_GDA = os.getenv( "PGSQL_PORT_GDA", "5432")
+PGSQL_USER_GDA = os.getenv( "PGSQL_USER_GDA", "admin")
+PGSQL_PASSWD_GDA = os.getenv( "PGSQL_PASSWD_GDA", "pexco599")
+PGSQL_BD_GDA = os.getenv( "PGSQL_BD_GDA", "GDA")
+#
+PGSQL_HOST_COMMS8 = os.getenv( "PGSQL_HOST_COMMS", "192.168.0.8")
+PGSQL_PORT_COMMS8 = os.getenv( "PGSQL_PORT_COMMS", "5432")
+PGSQL_USER_COMMS8 = os.getenv( "PGSQL_USER_COMMS", "admin")
+PGSQL_PASSWD_COMMS8 = os.getenv( "PGSQL_PASSWD_COMMS", "pexco599")
+PGSQL_BD_COMMS8 = os.getenv( "PGSQL_BD_COMMS", "bd_spcomms")
+#
+PGSQL_HOST_LOCAL = os.getenv( "PGSQL_HOST_LOCAL", "127.0.0.1")
+PGSQL_PORT_LOCAL = os.getenv( "PGSQL_PORT_LOCAL", "5432")
+PGSQL_USER_LOCAL = os.getenv( "PGSQL_USER_LOCAL", "admin")
+PGSQL_PASSWD_LOCAL = os.getenv( "PGSQL_PASSWD_LOCAL", "pexco599")
+PGSQL_BD_LOCAL = os.getenv( "PGSQL_BD_LOCAL", "spyapp")
+#
+URL_GDA = f"postgresql+psycopg2://{PGSQL_USER_GDA}:{PGSQL_PASSWD_GDA}@{PGSQL_HOST_GDA}:{PGSQL_PORT_GDA}/{PGSQL_BD_GDA}"
+URL_COMMS8 = f"postgresql+psycopg2://{PGSQL_USER_COMMS8}:{PGSQL_PASSWD_COMMS8}@{PGSQL_HOST_COMMS8}:{PGSQL_PORT_COMMS8}/{PGSQL_BD_COMMS8}"
+URL_LOCAL = f"postgresql+psycopg2://{PGSQL_USER_LOCAL}:{PGSQL_PASSWD_LOCAL}@{PGSQL_HOST_LOCAL}:{PGSQL_PORT_LOCAL}/{PGSQL_BD_LOCAL}"
+
+LOCAL_REPOSITORY_PATH = "/home/pablo/Spymovil/python/proyectos/SPYALL/repository"
+
+JWT_SECRET_KEY = "MySecretKey099"
+
+MIN_LENGTH_PASSWORD = 8
+
+BACKTIME_DATOS_HISTORICOS = 48
